@@ -2,6 +2,9 @@ var http  = require('http');
 var qs    = require('querystring');
 var spawn = require('child_process').spawn;
 
+var YOUGETPATH = '/usr/local/bin/you-get';
+var MPVPATH = '/usr/local/bin/mpv';
+
 var server = http.createServer(function(req, res) {
 
   switch(req.url) {
@@ -17,7 +20,7 @@ var server = http.createServer(function(req, res) {
       req.on('end', function() {
         var data = qs.parse(body);
         console.log(data.url);
-        var play = spawn('/usr/local/bin/you-get', ['--debug', '-p', '/usr/local/bin/mpv', data.url]);
+        var play = spawn(YOUGETPATH, ['--debug', '-p', MPVPATH, data.url]);
 
         play.stdout.on('data', function(data) {
           console.log('stdout: ' + data);
